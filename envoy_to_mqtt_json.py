@@ -204,7 +204,7 @@ def on_connect(client, userdata, flags, rc):
         print(dt_string," Connection failed - result code %d" % (rc))
 
 def on_publish(client, userdata, mid) :
-    print("mid: {0}".format(str(mid)))
+    if DEBUG: print("mid: {0}".format(str(mid)))
 
 def on_disconnect(client, userdata, rc) :
     print("Disconnect returned:")
@@ -379,7 +379,8 @@ def scrape_stream_meters():
                         json_string_freeds = json.dumps(round(stream.json()[1]["activePower"]))
                         if DEBUG: print(dt_string, 'Json freeds:', stream.json()[1]["activePower"])
                         client.publish(topic= MQTT_TOPIC_FREEDS , payload= json_string_freeds, qos=0 )
-                    time.sleep(0.6)
+                    #time.sleep(0.6)
+                    time.sleep(3.0)
                 else:
                     print(dt_string, 'Invalid Json Response:', stream.content)
         except requests.exceptions.RequestException as e:
